@@ -12,6 +12,6 @@ public class LogAspect {
 
     @AfterThrowing(pointcut = "execution(* hr.algebra.controller..* (..))", throwing = "ex")
     public void errorInterceptor(Exception ex) {
-        logger.error(ex.getCause().getMessage());
+        logger.error("TEST");
     }
 }

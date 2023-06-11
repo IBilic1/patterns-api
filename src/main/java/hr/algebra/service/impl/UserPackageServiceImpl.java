@@ -1,5 +1,6 @@
 package hr.algebra.service.impl;
 
+import hr.algebra.exception.NotFoundException;
 import hr.algebra.model.User;
 import hr.algebra.model.UserConsumption;
 import hr.algebra.model.UserPackage;
@@ -76,9 +77,8 @@ public class UserPackageServiceImpl implements UserPackageService {
     }
 
     @Override
-    @PreAuthorize("hasRole('ADMIN')")
     public UserPackage getUserPackage() {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userPackageRepository.findFirstByUserUsernameOrderByDateTimeAsc(principal.getUsername());
+        return userPackageRepository.findFirstByUserUsernameOrderByDateTimeAsc(principal.getUsername()).orElseThrow(() -> new NotFoundException("User with username not found"));
     }
 }

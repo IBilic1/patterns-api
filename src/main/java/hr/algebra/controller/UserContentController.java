@@ -11,13 +11,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/user-content")
-@Secured({"USER"})
+@Secured({"USER","ADMIN"})
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class UserContentController {
 
@@ -46,9 +48,11 @@ public class UserContentController {
     }
 
     @PostMapping
-    public ResponseEntity<UserContentDto> addUserContent(@RequestBody UserContentDto userContentDto) {
+    public ResponseEntity<Void> addUserContent(@RequestBody UserContentDto userContentDto) {
         UserContent userContent = userContentMapper.to(userContentDto);
-        return new ResponseEntity<>(userContentMapper.from(userContentService.addUsersContent(userContent)), HttpStatus.OK);
+        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        userContentService.addUsersContent(userContent, principal.getUsername());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/consumption")

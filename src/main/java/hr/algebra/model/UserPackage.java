@@ -62,4 +62,9 @@ public class UserPackage {
         this.customPackage = customPackage;
         this.dateTime = dateTime;
     }
+
+    public boolean checkIfLimit(double dailyUploadSize, int dailyUploadLimit){
+        return dailyUploadSize < this.getCustomPackage().getUploadSize() &&
+                dailyUploadLimit < this.getCustomPackage().getDailyUploadLimit();
+    }
 }

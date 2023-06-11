@@ -5,9 +5,11 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 
+@Component
 @Aspect
 public class UserLoggedAspect {
 
@@ -19,7 +21,8 @@ public class UserLoggedAspect {
 
         for (Object signatureArg : signatureArgs) {
             Field username = Class.forName(signatureArg.getClass().getName()).getDeclaredField("username");
-            logger.info(username.get(signatureArg) + " signed in successfully: " + joinPoint.getTarget());
+            username.setAccessible(true);
+            logger.info(username.get(signatureArg) + " signed in successfully");
         }
     }
 }

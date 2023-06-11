@@ -38,11 +38,6 @@ class AuthControllerTest {
 
     private static TokensDto tokensDto;
 
-    @BeforeEach
-    void setUp() {
-
-    }
-
     @Test
     void testAuthenticateUser() throws Exception {
         LoginUserDto userDto = new LoginUserDto();

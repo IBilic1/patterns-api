@@ -1,5 +1,7 @@
 package hr.algebra.service.impl;
 
+import hr.algebra.exception.NotFoundException;
+import hr.algebra.exception.OffLimitException;
 import hr.algebra.model.UserConsumption;
 import hr.algebra.model.UserContent;
 import hr.algebra.model.UserPackage;
@@ -9,12 +11,12 @@ import hr.algebra.repository.UserPackageRepository;
 import hr.algebra.repository.UserRepository;
 import hr.algebra.service.UserContentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,39 +51,42 @@ public class UserContentServiceImpl implements UserContentService {
     }
 
     @Override
-    public UserContent addUsersContent(UserContent userContent) {
-        UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        UserPackage usersPackage = userPackageRepository.findFirstByUserUsernameOrderByDateTimeAsc(principal.getUsername());
+    public void addUsersContent(UserContent userContent, String username) {
+        UserPackage userPackage = userPackageRepository.findFirstByUserUsernameOrderByDateTimeAsc(username)
+                .orElseThrow(() -> new NotFoundException("User with username not found"));
+        userContent.setUser(userRepository.findById(userContent.getUser().getId()).orElse(userContent.getUser()));
 
-        if (usersPackage != null) {
-            List<UserConsumption> consumptions = userConsumptionRepository.findByDateTime(userContent.getUser().getId(), userContent.getContent().getDateTime().minusDays(1), userContent.getContent().getDateTime());
+        Optional<UserConsumption> userConsumption = userConsumptionRepository.findByDateTime(
+                userContent.getUser().getId(),
+                userContent.getContent().getDateTime().minusDays(1),
+                userContent.getContent().getDateTime()).stream().findFirst();
+        userConsumption.ifPresentOrElse(
+                userConsumption1 -> ifConsumptionsExists(userContent, userPackage, userConsumption1),
+                () -> ifConsumptionsNotExists(userContent, userPackage));
+    }
 
-            if (!consumptions.isEmpty()) {
+    private UserContent ifConsumptionsExists(UserContent userContent, UserPackage userPackage, UserConsumption userConsumption1) {
+        double dailyUploadSize = userConsumption1.getUploadSize() + userContent.getContent().getSize();
 
-                UserConsumption userConsumption = consumptions.get(0);
-                int dailyUploadLimit = userConsumption.getDailyUploadLimit() + 1;
-                double dailyUploadSize = userConsumption.getUploadSize() + userContent.getContent().getSize();
-
-                if (dailyUploadSize < usersPackage.getCustomPackage().getUploadSize() &&
-                        dailyUploadLimit < usersPackage.getCustomPackage().getDailyUploadLimit()) {
-                    userContent.setUser(userRepository.findById(userContent.getUser().getId()).orElse(userContent.getUser()));
-                    userConsumption.setDailyUploadLimit(dailyUploadLimit);
-                    userConsumption.setUploadSize(dailyUploadSize);
-                    userConsumptionRepository.save(userConsumption);
-                    userContent.setUser(userRepository.findById(userContent.getUser().getId()).orElse(userContent.getUser()));
-                    return userContentRepository.save(userContent);
-                }
-            } else {
-                userConsumptionRepository.save(new UserConsumption(userContent.getContent().getDateTime(),
-                        userContent.getUser(),
-                        usersPackage.getCustomPackage(),
-                        userContent.getContent().getSize(), 1));
-
-                userContent.setUser(userRepository.findById(userContent.getUser().getId()).orElse(userContent.getUser()));
-                return userContentRepository.save(userContent);
-            }
+        if (userPackage.checkIfLimit(dailyUploadSize, userConsumption1.getDailyUploadLimit() + 1)) {
+            userConsumption1.setDailyUploadLimit(userConsumption1.getDailyUploadLimit() + 1);
+            userConsumption1.setUploadSize(dailyUploadSize);
+            userConsumptionRepository.save(userConsumption1);
+            return userContentRepository.save(userContent);
         }
-        return null;
+        throw new OffLimitException();
+    }
+
+    private UserContent ifConsumptionsNotExists(UserContent userContent, UserPackage userPackage) {
+        if (userContent.getContent().getSize() < userPackage.getCustomPackage().getUploadSize()) {
+            userConsumptionRepository.save(new UserConsumption(userContent.getContent().getDateTime(),
+                    userContent.getUser(),
+                    userPackage.getCustomPackage(),
+                    userContent.getContent().getSize(), 1));
+
+            return userContentRepository.save(userContent);
+        }
+        throw new OffLimitException();
     }
 
     @Override
@@ -97,4 +102,6 @@ public class UserContentServiceImpl implements UserContentService {
         }
         return null;
     }
+
+    public static final Function<List<UserConsumption>, Boolean> CALCULATE_COSUMPTION = List::isEmpty;
 }

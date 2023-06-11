@@ -12,14 +12,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/user-package")
 @Secured({"USER", "ADMIN"})
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class UserPackageController {
 
     private final UserPackageService userPackageService;
@@ -41,7 +48,7 @@ public class UserPackageController {
         return new ResponseEntity<>(new SuccessfullyUpdatedPackageDto(userPackageService.updatePackage(userPackage)), HttpStatus.OK);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/users")
     public ResponseEntity<List<UserPackageDto>> getAllUsersPackages() {
         return new ResponseEntity<>(userPackageMapper.mapToDto(userPackageService.getAllUsers()), HttpStatus.OK);
     }
@@ -55,7 +62,8 @@ public class UserPackageController {
         return ResponseEntity.ok().body(userMapper.from(user.get()));
     }
 
-    @GetMapping
+    @GetMapping()
+    @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<UserPackageDto> get() {
         return new ResponseEntity<>(userPackageMapper.from(userPackageService.getUserPackage()), HttpStatus.OK);
     }
