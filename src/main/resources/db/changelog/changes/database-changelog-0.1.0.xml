@@ -245,4 +245,25 @@
                                  referencedColumnNames="id_role"
                                  referencedTableName="role"/>
     </changeSet>
+        
+    <changeSet author="ibilic" id="202318051422">
+        <insert tableName="package">
+            <column name="upload_size" valueComputed="10000"/>
+            <column name="title" value="FREE"/>
+            <column name="daily_upload_limit" value="10"/>
+            <column name="price" value="10"/>
+        </insert>
+        <insert tableName="package">
+            <column name="upload_size" valueComputed="1000000"/>
+            <column name="title" value="PRO"/>
+            <column name="daily_upload_limit" value="50"/>
+            <column name="price" value="100"/>
+        </insert>
+        <insert tableName="package">
+            <column name="upload_size" valueComputed="100000000"/>
+            <column name="title" value="GOLD"/>
+            <column name="daily_upload_limit" value="100"/>
+            <column name="price" value="500"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
