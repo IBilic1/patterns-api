@@ -62,7 +62,20 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable();
+        http
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/patterns-api/api/auth/**").permitAll()
+                .antMatchers("/actuator/**").permitAll()
+                .antMatchers("/patterns-api/package").permitAll()
+                .anyRequest().authenticated().and()
+                .exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().csrf().disable();
+
+        http.authenticationProvider(authenticationProvider());
+
+        http.addFilterBefore(authenticationJwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }
