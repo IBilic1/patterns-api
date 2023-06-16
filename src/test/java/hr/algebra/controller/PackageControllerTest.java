@@ -4,13 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import hr.algebra.PatternsApiApplication;
 import hr.algebra.dto.LoginUserDto;
 import hr.algebra.dto.TokensDto;
-import hr.algebra.mapper.PackageDtoMapper;
 import hr.algebra.model.Package;
-import hr.algebra.service.PackageService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,7 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,13 +38,7 @@ public class PackageControllerTest {
     @Autowired
     private AuthController authController;
 
-    @Mock
-    private PackageService packageService;
-
-    @Mock
-    private PackageDtoMapper packageDtoMapper;
-
-    @InjectMocks
+    @Autowired
     private PackageController packageController;
 
     private static TokensDto tokensDto;
@@ -61,7 +50,6 @@ public class PackageControllerTest {
         MockitoAnnotations.initMocks(this);
 
         this.mockMvc = MockMvcBuilders.standaloneSetup(packageController).build();
-        testAuthenticateUser();
 
         Long id = 12345L;
         String title = "Example Title";
@@ -72,12 +60,14 @@ public class PackageControllerTest {
         Package aPackage = new Package(id, title, uploadSize, dailyUploadLimit, price);
         packages = new ArrayList<>();
         packages.add(aPackage);
+
+        testAuthenticateUser();
     }
 
     void testAuthenticateUser() throws Exception {
         LoginUserDto userDto = new LoginUserDto();
-        userDto.setUsername("isus123");
-        userDto.setPassword("ISUS123");
+        userDto.setUsername("ivana");
+        userDto.setPassword("ivana");
 
         MvcResult mvcResult = MockMvcBuilders.standaloneSetup(authController).build().perform(post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDto)))
@@ -89,11 +79,9 @@ public class PackageControllerTest {
 
     @Test
     void getAllPackages() throws Exception {
-        when(packageService.getPackages()).thenReturn(packages);
-        MvcResult mvcResult = mockMvc.perform(get("/package").header("bezkoder-jwt", tokensDto.getAccessToken()))
+        mockMvc.perform(get("/package").header("bezkoder-jwt", tokensDto.getAccessToken()))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
-        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 
 }

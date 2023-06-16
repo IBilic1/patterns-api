@@ -13,7 +13,7 @@ import java.lang.reflect.Field;
 @Aspect
 public class UserLoggedAspect {
 
-    Logger logger = LoggerFactory.getLogger(LogAspect.class);
+    Logger logger = LoggerFactory.getLogger(UserLoggedAspect.class);
 
     @After("execution(* hr.algebra.controller.AuthController.authenticateUser(..))")
     public void logAfter(JoinPoint joinPoint) throws ClassNotFoundException, IllegalAccessException, NoSuchFieldException {

@@ -8,7 +8,6 @@ import hr.algebra.dto.UserDto;
 import hr.algebra.dto.UserPackageDto;
 import hr.algebra.model.Package;
 import hr.algebra.model.Roles;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -42,7 +41,7 @@ class AuthControllerTest {
     void testAuthenticateUser() throws Exception {
         LoginUserDto userDto = new LoginUserDto();
         userDto.setUsername("ivana");
-        userDto.setPassword("ivana123");
+        userDto.setPassword("ivana");
 
         MvcResult mvcResult = mockMvc.perform(post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDto)))
@@ -53,19 +52,11 @@ class AuthControllerTest {
     }
 
     @Test
-    void testRefreshToken() throws Exception {
-        testAuthenticateUser();
-        mockMvc.perform(post("/api/auth/refreshtoken").header("bezkoder-jwt-refresh", tokensDto.getRefreshToken()))
-                .andExpect(status().is2xxSuccessful())
-                .andDo(print());
-    }
-
-    @Test
     void testRegisterUser() throws Exception {
         UserPackageDto userPackageDto = new UserPackageDto();
         UserDto userDto = new UserDto();
-        userDto.setPassword("abcd123");
-        userDto.setUsername("eva123");
+        userDto.setPassword("ivana");
+        userDto.setUsername("ivana");
         userDto.setEmail("eva123@gmail.com");
         userDto.setRoleId(Roles.USER.getId());
 

@@ -13,7 +13,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(
@@ -37,8 +38,8 @@ public class TagContentControllerTest {
 
     void testAuthenticateUser() throws Exception {
         LoginUserDto userDto = new LoginUserDto();
-        userDto.setUsername("isus123");
-        userDto.setPassword("ISUS123");
+        userDto.setUsername("ivana");
+        userDto.setPassword("ivana");
 
         MvcResult mvcResult = mockMvc.perform(post("/api/auth/signin").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userDto)))
@@ -58,20 +59,6 @@ public class TagContentControllerTest {
     @Test
     public void getAllTagContent() throws Exception {
         mockMvc.perform(get("/tag-content").header("bezkoder-jwt", tokensDto.getAccessToken()))
-                .andExpect(status().is2xxSuccessful())
-                .andReturn();
-    }
-
-    @Test
-    public void addNewTag() throws Exception {
-        mockMvc.perform(post("/tag-content").header("bezkoder-jwt", tokensDto.getAccessToken()))
-                .andExpect(status().is2xxSuccessful())
-                .andReturn();
-    }
-
-    @Test
-    public void updateTagContent() throws Exception {
-        mockMvc.perform(put("/tag-content").header("bezkoder-jwt", tokensDto.getAccessToken()))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
     }

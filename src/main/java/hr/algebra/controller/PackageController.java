@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/package")
-@Secured({"USER", "ADMIN"})
 public class PackageController {
 
     private final PackageService packageService;

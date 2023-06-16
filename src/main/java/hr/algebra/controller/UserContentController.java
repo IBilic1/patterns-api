@@ -47,7 +47,7 @@ public class UserContentController {
         return new ResponseEntity<>(userContentMapper.mapToDto(userContentService.getUserContents(id)), HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/content")
     public ResponseEntity<Void> addUserContent(@RequestBody UserContentDto userContentDto) {
         UserContent userContent = userContentMapper.to(userContentDto);
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

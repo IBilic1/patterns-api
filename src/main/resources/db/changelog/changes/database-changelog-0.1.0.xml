@@ -245,4 +245,41 @@
                                  referencedColumnNames="id_role"
                                  referencedTableName="role"/>
     </changeSet>
+
+    <changeSet author="ibilic" id="202315651425">
+        <insert tableName="package">
+            <column name="upload_size" valueComputed="10000000"/>
+            <column name="title" value="FREE"/>
+            <column name="daily_upload_limit" value="10"/>
+            <column name="price" value="10"/>
+        </insert>
+        <insert tableName="package">
+            <column name="upload_size" valueComputed="100000000"/>
+            <column name="title" value="PRO"/>
+            <column name="daily_upload_limit" value="50"/>
+            <column name="price" value="100"/>
+        </insert>
+        <insert tableName="package">
+            <column name="upload_size" valueComputed="10000000000"/>
+            <column name="title" value="GOLD"/>
+            <column name="daily_upload_limit" value="100"/>
+            <column name="price" value="500"/>
+        </insert>
+    </changeSet>
+    <changeSet author="ibilic" id="202315651423">
+        <insert tableName="role">
+            <column name="title" value="ADMIN"/>
+        </insert>
+        <insert tableName="role">
+            <column name="title" value="USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="ibilic" id="202315651424">
+        <insert tableName="user">
+            <column name="username" value="admin"/>
+            <column name="email" value="admin" />
+            <column name="password" value="admin"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
