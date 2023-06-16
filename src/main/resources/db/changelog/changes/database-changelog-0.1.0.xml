@@ -266,4 +266,13 @@
             <column name="price" value="500"/>
         </insert>
     </changeSet>
+        
+    <changeSet author="ibilic" id="202318051423">
+        <insert tableName="role">
+            <column name="title" valueComputed="ADMIN"/>
+        </insert>
+        <insert tableName="role">
+            <column name="title" valueComputed="USER"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
