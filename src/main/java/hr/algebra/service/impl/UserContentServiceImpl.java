@@ -54,12 +54,14 @@ public class UserContentServiceImpl implements UserContentService {
     public void addUsersContent(UserContent userContent, String username) {
         UserPackage userPackage = userPackageRepository.findFirstByUserUsernameOrderByDateTimeAsc(username)
                 .orElseThrow(() -> new NotFoundException("User with username not found"));
+
         userContent.setUser(userRepository.findById(userContent.getUser().getId()).orElse(userContent.getUser()));
 
         Optional<UserConsumption> userConsumption = userConsumptionRepository.findByDateTime(
                 userContent.getUser().getId(),
                 userContent.getContent().getDateTime().minusDays(1),
                 userContent.getContent().getDateTime()).stream().findFirst();
+
         userConsumption.ifPresentOrElse(
                 userConsumption1 -> ifConsumptionsExists(userContent, userPackage, userConsumption1),
                 () -> ifConsumptionsNotExists(userContent, userPackage));
