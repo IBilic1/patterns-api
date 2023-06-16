@@ -269,10 +269,10 @@
         
     <changeSet author="ibilic" id="202318051423">
         <insert tableName="role">
-            <column name="title" valueComputed="ADMIN"/>
+            <column name="title" value="ADMIN"/>
         </insert>
         <insert tableName="role">
-            <column name="title" valueComputed="USER"/>
+            <column name="title" value="USER"/>
         </insert>
     </changeSet>
 </databaseChangeLog>
