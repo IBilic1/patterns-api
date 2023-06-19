@@ -8,4 +8,4 @@ RUN mvn -Dmaven.test.skip=true -f /home/app/pom.xml install package
 FROM openjdk:11-jre-slim
 COPY --from=build /home/app/target/patterns-api-0.0.1-SNAPSHOT.jar /usr/local/lib/patterns-api.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar","/usr/local/lib/patterns-api.jar"]
+ENTRYPOINT ["java","-Dspring.profiles.active=production", "-jar","/usr/local/lib/patterns-api.jar"]
