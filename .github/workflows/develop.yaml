@@ -19,6 +19,7 @@ jobs:
       - name: Build with Maven
         run: mvn --batch-mode -Dmaven.test.skip=true --update-snapshots package
   test:
+    needs:  [build]
     name: Test SonarQube
     runs-on: ubuntu-latest
     steps:
