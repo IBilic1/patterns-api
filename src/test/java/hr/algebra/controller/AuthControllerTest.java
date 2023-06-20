@@ -66,7 +66,7 @@ class AuthControllerTest {
         userPackageDto.setRoleId(Roles.USER.getId());
 
         userPackageDto.setUser(userDto);
-        userPackageDto.setPackage_(package_);
+        userPackageDto.setIgPackage(package_);
         mockMvc.perform(post("/api/auth/signup").contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(userPackageDto)))
                 .andExpect(status().isBadRequest())

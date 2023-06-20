@@ -1,4 +1,4 @@
-package hr.algebra.designPattern.builder;
+package hr.algebra.utils;
 
 import hr.algebra.model.Package;
 import hr.algebra.model.User;
@@ -14,7 +14,7 @@ public interface IUserConsumptionBuilder {
 
     IUserConsumptionBuilder setUser(User user);
 
-    IUserConsumptionBuilder setPackage_(Package package_);
+    IUserConsumptionBuilder setPackage(Package igPackage);
 
     IUserConsumptionBuilder setUploadSize(double uploadSize);
 

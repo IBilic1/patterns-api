@@ -245,7 +245,7 @@
                                  referencedColumnNames="id_role"
                                  referencedTableName="role"/>
     </changeSet>
-        
+
     <changeSet author="ibilic" id="202318051445">
         <insert tableName="package">
             <column name="upload_size" valueComputed="10000000"/>
@@ -266,7 +266,7 @@
             <column name="price" value="500"/>
         </insert>
     </changeSet>
-        
+
     <changeSet author="ibilic" id="202318051423">
         <insert tableName="role">
             <column name="title" value="ADMIN"/>
@@ -278,7 +278,7 @@
     <changeSet author="ibilic" id="202315651424">
         <insert tableName="user">
             <column name="username" value="admin"/>
-            <column name="email" value="admin" />
+            <column name="email" value="admin"/>
             <column name="password" value="admin"/>
             <column name="role_id" value="1"/>
         </insert>

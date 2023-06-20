@@ -10,7 +10,7 @@ public class UserPackageDto {
 
     private UserDto user;
 
-    private Package package_;
+    private Package igPackage;
 
     private LocalDateTime dateTime;
 
@@ -19,10 +19,10 @@ public class UserPackageDto {
     public UserPackageDto() {
     }
 
-    public UserPackageDto(int id, UserDto user, Package package_, LocalDateTime dateTime, int roleId) {
+    public UserPackageDto(int id, UserDto user, Package igPackage, LocalDateTime dateTime, int roleId) {
         this.id = id;
         this.user = user;
-        this.package_ = package_;
+        this.igPackage = igPackage;
         this.dateTime = dateTime;
         this.roleId = roleId;
     }
@@ -43,12 +43,12 @@ public class UserPackageDto {
         this.user = user;
     }
 
-    public Package getPackage_() {
-        return package_;
+    public Package getIgPackage() {
+        return igPackage;
     }
 
-    public void setPackage_(Package package_) {
-        this.package_ = package_;
+    public void setIgPackage(Package igPackage) {
+        this.igPackage = igPackage;
     }
 
     public LocalDateTime getDateTime() {

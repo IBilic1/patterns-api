@@ -8,7 +8,7 @@ public class LoginUserDto {
     private String password;
 
     @NotNull
-    private String username;
+    public String username;
 
     public LoginUserDto() {
     }

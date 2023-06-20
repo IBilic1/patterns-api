@@ -1,19 +1,17 @@
 package hr.algebra.dto;
 
-import hr.algebra.model.Content;
-
 public class UserContentDto {
 
     private int id;
 
     private UserDto user;
 
-    private Content content;
+    private ContentDto content;
 
     public UserContentDto() {
     }
 
-    public UserContentDto(int id, UserDto user, Content content) {
+    public UserContentDto(int id, UserDto user, ContentDto content) {
         this.id = id;
         this.user = user;
         this.content = content;
@@ -35,11 +33,11 @@ public class UserContentDto {
         this.user = user;
     }
 
-    public Content getContent() {
+    public ContentDto getContent() {
         return content;
     }
 
-    public void setContent(Content content) {
+    public void setContent(ContentDto content) {
         this.content = content;
     }
 }

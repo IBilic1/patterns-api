@@ -10,7 +10,6 @@ import hr.algebra.repository.UserPackageRepository;
 import hr.algebra.repository.UserRepository;
 import hr.algebra.service.UserPackageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,7 @@ public class UserPackageServiceImpl implements UserPackageService {
 
     @Override
     public User signIn(UserPackage userPackage) {
-        userPackage.setCustomPackage(packageRepository.findById(userPackage.getCustomPackage().getId()).orElse(userPackage.getCustomPackage()));
+        userPackage.setIgPackage(packageRepository.findById(userPackage.getIgPackage().getId()).orElse(userPackage.getIgPackage()));
         if (!userRepository.existsByEmail(userPackage.getUser().getEmail()).isPresent()) {
             UserPackage savedUser = userPackageRepository.saveAndFlush(userPackage);
             return savedUser.getUser();
@@ -58,12 +57,12 @@ public class UserPackageServiceImpl implements UserPackageService {
         UserDetails principal = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<UserPackage> byDateTime = userPackageRepository.findByDateTime(principal.getUsername(), userPackage.getDateTime().minusDays(1), userPackage.getDateTime());
         if (byDateTime.size() == 1) {
-            userPackage.setCustomPackage(packageRepository.findById(userPackage.getCustomPackage().getId()).orElse(userPackage.getCustomPackage()));
+            userPackage.setIgPackage(packageRepository.findById(userPackage.getIgPackage().getId()).orElse(userPackage.getIgPackage()));
             userPackage.setUser(userRepository.findById(userPackage.getUser().getId()).orElse(userPackage.getUser()));
             userPackageRepository.save(userPackage);
             userConsumptionRepository.save(new UserConsumption(userPackage.getDateTime(),
                     userPackage.getUser(),
-                    userPackage.getCustomPackage(),
+                    userPackage.getIgPackage(),
                     0, 0));
             return true;
         }
