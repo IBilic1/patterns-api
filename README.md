@@ -1,5 +1,4 @@
 # patterns-api
-patterns-api
 
 - tokens
 1. CSRF token
