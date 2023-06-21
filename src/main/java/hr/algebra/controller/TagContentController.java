@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/tag-content")
 @Secured({"USER", "ADMIN"})
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class TagContentController {
 
     private final TagContentService tagContentService;
@@ -53,4 +55,11 @@ public class TagContentController {
         TagContent tagContent = tagContentMapper.to(tagContentDto);
         return new ResponseEntity<>(tagContentMapper.from(tagContentService.removeTagContent(tagContent)), HttpStatus.OK);
     }
+
+    @GetMapping("/contents")
+    @Secured("ADMIN")
+    public ResponseEntity<List<TagContentDto>> getTagContent() {
+        return new ResponseEntity<>(tagContentMapper.mapToDto(tagContentService.getAllTagsContent()), HttpStatus.OK);
+    }
+
 }

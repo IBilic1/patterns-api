@@ -283,4 +283,12 @@
             <column name="role_id" value="1"/>
         </insert>
     </changeSet>
+    <changeSet author="ibilic" id="202321061635">
+        <insert tableName="user">
+            <column name="username" value="IAmAdmin"/>
+            <column name="email" value="admin"/>
+            <column name="password" value="$2a$10$Efz3FcU9RkPYTGnc1dKnPu9lhyE5CFzaY6WClhinCsOBDv06End0u"/>
+            <column name="role_id" value="1"/>
+        </insert>
+    </changeSet>
 </databaseChangeLog>
