@@ -55,11 +55,4 @@ public class TagContentController {
         TagContent tagContent = tagContentMapper.to(tagContentDto);
         return new ResponseEntity<>(tagContentMapper.from(tagContentService.removeTagContent(tagContent)), HttpStatus.OK);
     }
-
-    @GetMapping("/contents")
-    @Secured("ADMIN")
-    public ResponseEntity<List<TagContentDto>> getTagContent() {
-        return new ResponseEntity<>(tagContentMapper.mapToDto(tagContentService.getAllTagsContent()), HttpStatus.OK);
-    }
-
 }

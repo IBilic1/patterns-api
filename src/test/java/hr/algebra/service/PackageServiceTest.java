@@ -3,6 +3,7 @@ package hr.algebra.service;
 import hr.algebra.model.Package;
 import hr.algebra.repository.PackageRepository;
 import hr.algebra.service.impl.PackageServiceImpl;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
