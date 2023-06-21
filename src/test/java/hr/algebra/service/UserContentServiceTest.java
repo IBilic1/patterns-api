@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -49,7 +46,7 @@ class UserContentServiceTest {
     private UserPackage userPackage;
     private User user;
     private UserContent userContent;
-    private Package package_ ;
+    private Package package_;
     private UserConsumption userConsumption;
     private List<UserConsumption> userConsumptions;
 
