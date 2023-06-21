@@ -80,10 +80,10 @@ public class UserContentServiceImpl implements UserContentService {
     }
 
     private UserContent ifConsumptionsNotExists(UserContent userContent, UserPackage userPackage) {
-        if (userContent.getContent().getSize() < userPackage.getCustomPackage().getUploadSize()) {
+        if (userContent.getContent().getSize() < userPackage.getIgPackage().getUploadSize()) {
             userConsumptionRepository.save(new UserConsumption(userContent.getContent().getDateTime(),
                     userContent.getUser(),
-                    userPackage.getCustomPackage(),
+                    userPackage.getIgPackage(),
                     userContent.getContent().getSize(), 1));
 
             return userContentRepository.save(userContent);

@@ -2,7 +2,6 @@ package hr.algebra.service;
 
 import hr.algebra.model.UserConsumption;
 import hr.algebra.model.UserContent;
-import org.springframework.data.crossstore.ChangeSetPersister;
 
 import java.util.List;
 

@@ -19,7 +19,7 @@ public class UserConsumption {
 
     @ManyToOne
     @JoinColumn(name = "package_id")
-    private Package customPackage;
+    private Package igPackage;
 
     private double uploadSize;
 
@@ -28,10 +28,10 @@ public class UserConsumption {
     public UserConsumption() {
     }
 
-    public UserConsumption(LocalDateTime dateTime, User user, Package customPackage, double uploadSize, int dailyUploadLimit) {
+    public UserConsumption(LocalDateTime dateTime, User user, Package igPackage, double uploadSize, int dailyUploadLimit) {
         this.dateTime = dateTime;
         this.user = user;
-        this.customPackage = customPackage;
+        this.igPackage = igPackage;
         this.uploadSize = uploadSize;
         this.dailyUploadLimit = dailyUploadLimit;
     }
@@ -60,12 +60,12 @@ public class UserConsumption {
         this.user = user;
     }
 
-    public Package getCustomPackage() {
-        return customPackage;
+    public Package getIgPackage() {
+        return igPackage;
     }
 
-    public void setCustomPackage(Package package_) {
-        this.customPackage = package_;
+    public void setIgPackage(Package igPackage) {
+        this.igPackage = igPackage;
     }
 
     public double getUploadSize() {
@@ -83,8 +83,6 @@ public class UserConsumption {
     public void setDailyUploadLimit(int dailyUploadLimit) {
         this.dailyUploadLimit = dailyUploadLimit;
     }
-
-
 
 
 }

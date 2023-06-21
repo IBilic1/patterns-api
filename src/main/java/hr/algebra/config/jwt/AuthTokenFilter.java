@@ -27,7 +27,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
     private final UserRepository userDetailsService;
 
-    @Value("${bezkoder.app.jwtCookieName}")
+    @Value("${patterns.app.jwtCookieName}")
     private String jwtCookie;
 
     @Autowired

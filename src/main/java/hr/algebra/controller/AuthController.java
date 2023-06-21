@@ -48,7 +48,7 @@ public class AuthController {
 
     RefreshTokenService refreshTokenService;
 
-    @Value("${bezkoder.app.jwtRefreshCookieName}")
+    @Value("${patterns.app.jwtRefreshCookieName}")
     private String jwtRefreshCookie;
 
     @Autowired

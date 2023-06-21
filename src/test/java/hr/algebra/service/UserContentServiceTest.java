@@ -81,7 +81,7 @@ class UserContentServiceTest {
         userPackage = new UserPackage();
         userPackage.setDateTime(LocalDateTime.now());
         userPackage.setUser(user);
-        userPackage.setCustomPackage(package_);
+        userPackage.setIgPackage(package_);
 
         userConsumptions = new ArrayList<>();
         userConsumption = new UserConsumption(LocalDateTime.now(), user, package_, 1, 2);

@@ -19,7 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/user-content")
-@Secured({"USER","ADMIN"})
+@Secured({"USER", "ADMIN"})
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true)
 public class UserContentController {
 

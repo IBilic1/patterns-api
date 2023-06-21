@@ -11,7 +11,8 @@ public class Content {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String content;
+    @Column(name = "content")
+    private String pictureContent;
 
     private double size;
 
@@ -22,9 +23,9 @@ public class Content {
     public Content() {
     }
 
-    public Content(Long id, String content, double size, LocalDateTime dateTime, String format) {
+    public Content(Long id, String pictureContent, double size, LocalDateTime dateTime, String format) {
         this.id = id;
-        this.content = content;
+        this.pictureContent = pictureContent;
         this.size = size;
         this.dateTime = dateTime;
         this.format = format;
@@ -38,12 +39,12 @@ public class Content {
         this.id = id;
     }
 
-    public String getContent() {
-        return content;
+    public String getPictureContent() {
+        return pictureContent;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setPictureContent(String pictureContent) {
+        this.pictureContent = pictureContent;
     }
 
     public double getSize() {

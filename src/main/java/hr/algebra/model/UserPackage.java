@@ -17,7 +17,7 @@ public class UserPackage {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "package_id")
-    private Package customPackage;
+    private Package igPackage;
 
     private LocalDateTime dateTime;
 
@@ -40,12 +40,12 @@ public class UserPackage {
         this.user = user;
     }
 
-    public Package getCustomPackage() {
-        return customPackage;
+    public Package getIgPackage() {
+        return igPackage;
     }
 
-    public void setCustomPackage(Package customPackage) {
-        this.customPackage = customPackage;
+    public void setIgPackage(Package customPackage) {
+        this.igPackage = customPackage;
     }
 
     public LocalDateTime getDateTime() {
@@ -56,15 +56,15 @@ public class UserPackage {
         this.dateTime = dateTime;
     }
 
-    public UserPackage(int id, User user, Package customPackage, LocalDateTime dateTime) {
+    public UserPackage(int id, User user, Package igPackage, LocalDateTime dateTime) {
         this.id = id;
         this.user = user;
-        this.customPackage = customPackage;
+        this.igPackage = igPackage;
         this.dateTime = dateTime;
     }
 
-    public boolean checkIfLimit(double dailyUploadSize, int dailyUploadLimit){
-        return dailyUploadSize < this.getCustomPackage().getUploadSize() &&
-                dailyUploadLimit < this.getCustomPackage().getDailyUploadLimit();
+    public boolean checkIfLimit(double dailyUploadSize, int dailyUploadLimit) {
+        return dailyUploadSize < this.getIgPackage().getUploadSize() &&
+                dailyUploadLimit < this.getIgPackage().getDailyUploadLimit();
     }
 }
