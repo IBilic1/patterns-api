@@ -51,14 +51,14 @@ public class TagContentControllerTest {
 
     @Test
     public void getAllTags() throws Exception {
-        mockMvc.perform(get("/tag-content/tags").header("bezkoder-jwt", tokensDto.getAccessToken()))
+        mockMvc.perform(get("/tag-content/tags").header("patterns-jwt", tokensDto.getAccessToken()))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
     }
 
     @Test
     public void getAllTagContent() throws Exception {
-        mockMvc.perform(get("/tag-content").header("bezkoder-jwt", tokensDto.getAccessToken()))
+        mockMvc.perform(get("/tag-content").header("patterns-jwt", tokensDto.getAccessToken()))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
     }

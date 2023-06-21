@@ -79,7 +79,7 @@ public class PackageControllerTest {
 
     @Test
     void getAllPackages() throws Exception {
-        mockMvc.perform(get("/package").header("bezkoder-jwt", tokensDto.getAccessToken()))
+        mockMvc.perform(get("/package").header("patterns-jwt", tokensDto.getAccessToken()))
                 .andExpect(status().is2xxSuccessful())
                 .andReturn();
     }
